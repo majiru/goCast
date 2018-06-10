@@ -102,6 +102,8 @@ func commandHandler(w http.ResponseWriter, r *http.Request) {
 		commands = append(commands, "play")
 	case "Pause":
 		commands = append(commands, "pause")
+	case "Next":
+		cpmmands = append(commands, "next")
 	}
 	writeCommand(commands)
 	w.Write([]byte("Sent Command!!"))
