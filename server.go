@@ -40,7 +40,7 @@ func main() {
 		fileDir = fileDir[:len(fileDir)-2]
 	}
 	playerIP = os.Args[2]
-	address = os.Hostname()
+	address, _ = os.Hostname()
 
 	http.HandleFunc("/", rootHandler)
 	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir(fileDir)+"/")))
@@ -103,7 +103,7 @@ func commandHandler(w http.ResponseWriter, r *http.Request) {
 	case "Pause":
 		commands = append(commands, "pause")
 	case "Next":
-		cpmmands = append(commands, "next")
+		commands = append(commands, "next")
 	}
 	writeCommand(commands)
 	w.Write([]byte("Sent Command!!"))

@@ -29,4 +29,4 @@ Clicking on a link will either change the web page to read the directory, or sen
 * Display bar with current position in file
 
 ## Credits
-[Blang](www.github.com/blang) for his awesome mpv api.
+[Blang](http://www.github.com/blang) for his awesome mpv api.
