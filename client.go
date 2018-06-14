@@ -1,4 +1,4 @@
-package main
+package gocast
 
 import (
 	"bufio"
@@ -11,10 +11,8 @@ import (
 
 var mpvc *mpv.Client
 
-const endSign = "\r\n\r\n"
-const switchSign = ";;"
-
-func main() {
+//Listen starts a new client gocast client listener//
+func Listen() {
 	mpvc = mpv.NewClient(mpv.NewIPCClient("/tmp/mpvsocket"))
 
 	ln, err := net.Listen("tcp", ":8000")

@@ -1,7 +1,6 @@
-package main
+package gocast
 
 import (
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -10,9 +9,6 @@ import (
 	"net/url"
 	"os"
 )
-
-const switchSign = ";;"
-const endSign = "\r\n\r\n"
 
 type file struct {
 	Filename string
@@ -29,17 +25,14 @@ var (
 	address  string
 )
 
-func main() {
-	if len(os.Args) < 3 {
-		fmt.Println("Usage: " + os.Args[0] + " dir playerIP")
-		os.Exit(1)
-	}
-
-	fileDir = os.Args[1]
+//Serve creates and initalized the gocast server//
+func Serve(directory, playerAddress string) {
+	fileDir = directory
 	if fileDir[len(fileDir)-1] == '/' {
 		fileDir = fileDir[:len(fileDir)-2]
 	}
-	playerIP = os.Args[2]
+
+	playerIP = playerAddress
 	address, _ = os.Hostname()
 
 	http.HandleFunc("/", rootHandler)
