@@ -25,6 +25,9 @@ var (
 	address  string
 )
 
+const switchSign = ";;"
+const endSign = "\r\n\r\n"
+
 //Serve creates and initalized the gocast server//
 func Serve(directory, playerAddress string) {
 	fileDir = directory

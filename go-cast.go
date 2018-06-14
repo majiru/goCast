@@ -1,12 +1,10 @@
-package gocast
+package main
 
 import (
 	"fmt"
+	"github.com/majiru/gocast/api"
 	"os"
 )
-
-const switchSign = ";;"
-const endSign = "\r\n\r\n"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -15,10 +13,10 @@ func main() {
 
 	switch os.Args[1] {
 	case "client":
-		Listen()
+		gocast.Listen()
 	case "serve":
 		if len(os.Args) < 3 {
-			Serve(os.Args[1], os.Args[2])
+			gocast.Serve(os.Args[1], os.Args[2])
 		} else {
 			printUsage()
 		}
@@ -28,7 +26,7 @@ func main() {
 
 func printUsage() {
 	fmt.Println("Usage:")
-	fmt.Println(os.Args[0] + "client")
-	fmt.Println(os.Args[0] + "server /path/to/media/dir playerIP")
+	fmt.Println(os.Args[0] + " client")
+	fmt.Println(os.Args[0] + " server /path/to/media/dir playerIP")
 	os.Exit(1)
 }
