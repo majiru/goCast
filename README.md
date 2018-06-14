@@ -1,19 +1,25 @@
 # GoCast
-A simple set of golang scripts to stream from one computer to another.
-This program works by setting up a html server on the file server and then sending the remote paht to the player to open the file.
-This was designed to allow for other devices besides the player and server to control the player through a web interface.
+A simple set of golang scripts to stream from a computer with local media to a raspberrypi. The whole interface is controllable from a phone or anything with a web browser.
+
+This program works by setting up a html server on the file server and then sending the remote path to the player to open the file.
+
+Currently the client only supports mpv, but there are plans to support omxplayer as well for better acceleration.
 
 ## Setup
-To start the server instance on the file server run: `go run server.go /path/to/media playerIP`
+First install gocast from the command line with `go get github.com/majiru/gocast`
 
-Then, to start the client you first have to start mpv with:
+### Server
+To start the server instance on the file server run: `gocast server /path/to/media playerIP`
+
+### Client
+To start the client you first have to start mpv with:
 `mpv --idle --input-ipc-server=/tmp/mpvsocket`
 
-Then start the client listener: `go run client.go`
+Then start the client listener: `gocast client`
 
 ## Useage
 Simple browse to the server's ip in any web browser to control the player. 
-There are simple controls at the top of the page{play, pause next} that will individual commands to the player.
+There are simple controls at the top of the page{play, pause, next} that will individual commands to the player.
 Clicking on a link will either change the web page to read the directory, or send the file to the player to stream.
 
 ## Todo
