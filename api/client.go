@@ -38,7 +38,6 @@ func handleConn(conn net.Conn) {
 	for {
 		n, err := r.Read(buffer)
 		input := string(buffer[:n])
-		fmt.Println(input)
 		if err != nil {
 			break
 		}

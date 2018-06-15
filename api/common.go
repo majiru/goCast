@@ -1,3 +1,6 @@
+package gocast
+
+const mainPage = `
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,3 +16,7 @@
         </ul>
     </body>
 </html>
+`
+
+const switchSign = ";;"
+const endSign = "\r\n\r\n"

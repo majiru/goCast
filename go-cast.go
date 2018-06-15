@@ -1,12 +1,15 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/majiru/gocast/api"
 	"os"
 )
 
 func main() {
+	var port = flag.String("port", "8080", "Port for webserver")
+
 	if len(os.Args) < 2 {
 		printUsage()
 	}
@@ -14,11 +17,11 @@ func main() {
 	switch os.Args[1] {
 	case "client":
 		gocast.Listen()
-	case "serve":
+	case "server":
 		if len(os.Args) < 3 {
-			gocast.Serve(os.Args[1], os.Args[2])
-		} else {
 			printUsage()
+		} else {
+			gocast.Serve(os.Args[2], os.Args[3], *port)
 		}
 	}
 
@@ -27,6 +30,6 @@ func main() {
 func printUsage() {
 	fmt.Println("Usage:")
 	fmt.Println(os.Args[0] + " client")
-	fmt.Println(os.Args[0] + " server /path/to/media/dir playerIP")
+	fmt.Println(os.Args[0] + " -port=8080 server /path/to/media/dir playerIP")
 	os.Exit(1)
 }

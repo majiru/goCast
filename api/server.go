@@ -20,29 +20,27 @@ type page struct {
 }
 
 var (
-	fileDir  string
-	playerIP = "localhost"
-	address  string
+	fileDir    string
+	playerIP   string
+	playerPort string
+	address    string
 )
 
-const switchSign = ";;"
-const endSign = "\r\n\r\n"
-
 //Serve creates and initalized the gocast server//
-func Serve(directory, playerAddress string) {
+func Serve(directory, playerAddress, port string) {
 	fileDir = directory
 	if fileDir[len(fileDir)-1] == '/' {
 		fileDir = fileDir[:len(fileDir)-2]
 	}
-
 	playerIP = playerAddress
 	address, _ = os.Hostname()
+	playerPort = port
 
 	http.HandleFunc("/", rootHandler)
 	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir(fileDir)+"/")))
 	http.HandleFunc("/command/", commandHandler)
 	http.HandleFunc("/dir/", dirHandler)
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }
 
@@ -93,7 +91,7 @@ func commandHandler(w http.ResponseWriter, r *http.Request) {
 	case "Open":
 		commands = append(commands, "open")
 		path, _ := url.QueryUnescape(q.Get("File"))
-		commands = append(commands, "http://"+address+"/files"+path)
+		commands = append(commands, "http://"+address+":"+playerPort+"/files"+path)
 	case "Play":
 		commands = append(commands, "play")
 	case "Pause":
@@ -110,7 +108,7 @@ func dirHandler(w http.ResponseWriter, r *http.Request) {
 	var files []file
 	path, _ := url.QueryUnescape(q.Get("File"))
 	walkDir(path, &files)
-	t, _ := template.ParseFiles("main.tmpl")
+	t, _ := template.New("mainPage").Parse(mainPage)
 	t.Execute(w, page{files})
 }
 
@@ -118,7 +116,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	var files []file
 	walkDir("/", &files)
 
-	t, _ := template.ParseFiles("main.tmpl")
-
+	t, _ := template.New("mainPage").Parse(mainPage)
 	t.Execute(w, page{files})
 }
