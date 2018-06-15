@@ -9,19 +9,22 @@ import (
 
 func main() {
 	var port = flag.String("port", "8080", "Port for webserver")
+	flag.Parse()
 
-	if len(os.Args) < 2 {
+	args := flag.Args()
+
+	if len(args) < 1 {
 		printUsage()
 	}
 
-	switch os.Args[1] {
+	switch args[0] {
 	case "client":
 		gocast.Listen()
 	case "server":
-		if len(os.Args) < 3 {
+		if len(args) < 3 {
 			printUsage()
 		} else {
-			gocast.Serve(os.Args[2], os.Args[3], *port)
+			gocast.Serve(args[1], args[2], *port)
 		}
 	}
 
